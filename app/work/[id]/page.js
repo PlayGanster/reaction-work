@@ -45,7 +45,7 @@ export default async function WorkPage({ params }) {
         </div>
       </section>
 
-      {hasCover && (
+      {/* {hasCover && (
         <section className="work-cover-section">
           <div className="container">
             <button
@@ -58,7 +58,7 @@ export default async function WorkPage({ params }) {
             </button>
           </div>
         </section>
-      )}
+      )} */}
 
       <section className="work-body-section">
         <div className="container work-body">
