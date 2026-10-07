@@ -7,22 +7,26 @@ export default function Lightbox() {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
-    const triggers = Array.from(document.querySelectorAll("[data-lightbox-src]"));
-    setItems(
-      triggers.map((el) => ({
-        src: el.getAttribute("data-lightbox-src"),
-        alt: el.getAttribute("data-lightbox-alt") || "",
-      }))
-    );
-
     function onClick(e) {
       const trigger = e.target.closest("[data-lightbox-src]");
       if (!trigger) return;
       e.preventDefault();
-      const src = trigger.getAttribute("data-lightbox-src");
-      const index = triggers.findIndex(
-        (t) => t.getAttribute("data-lightbox-src") === src
+
+      // Собираем триггеры В МОМЕНТ КЛИКА
+      const triggers = Array.from(
+        document.querySelectorAll("[data-lightbox-src]")
       );
+      const collected = triggers
+        .map((el) => ({
+          src: el.getAttribute("data-lightbox-src"),
+          alt: el.getAttribute("data-lightbox-alt") || "",
+        }))
+        .filter((it) => it.src);
+
+      const src = trigger.getAttribute("data-lightbox-src");
+      const index = collected.findIndex((it) => it.src === src);
+
+      setItems(collected);
       setCurrent(index >= 0 ? index : 0);
       setOpen(true);
       document.body.style.overflow = "hidden";
@@ -47,6 +51,7 @@ export default function Lightbox() {
     setOpen(false);
     document.body.style.overflow = "";
   }
+
   function go(delta) {
     if (items.length < 2) return;
     setCurrent((c) => (c + delta + items.length) % items.length);
@@ -55,12 +60,50 @@ export default function Lightbox() {
   if (!open || !items[current]) return null;
 
   return (
-    <div className="lightbox is-open" onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
-      <button className="lightbox-close" onClick={close} aria-label="Закрыть">×</button>
-      <button className="lightbox-prev" onClick={(e) => { e.stopPropagation(); go(-1); }} aria-label="Предыдущий">←</button>
-      <button className="lightbox-next" onClick={(e) => { e.stopPropagation(); go(1); }} aria-label="Следующий">→</button>
-      <div className="lightbox-stage" onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
-        <img className="lightbox-img" src={items[current].src} alt={items[current].alt} />
+    <div
+      className="lightbox is-open"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) close();
+      }}
+    >
+      <button
+        className="lightbox-close"
+        onClick={close}
+        aria-label="Закрыть"
+      >
+        ×
+      </button>
+      <button
+        className="lightbox-prev"
+        onClick={(e) => {
+          e.stopPropagation();
+          go(-1);
+        }}
+        aria-label="Предыдущий"
+      >
+        ←
+      </button>
+      <button
+        className="lightbox-next"
+        onClick={(e) => {
+          e.stopPropagation();
+          go(1);
+        }}
+        aria-label="Следующий"
+      >
+        →
+      </button>
+      <div
+        className="lightbox-stage"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) close();
+        }}
+      >
+        <img
+          className="lightbox-img"
+          src={items[current].src}
+          alt={items[current].alt}
+        />
         <div className="lightbox-counter">
           <span>{current + 1}</span> / <span>{items.length}</span>
         </div>
