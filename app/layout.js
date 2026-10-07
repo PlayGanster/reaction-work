@@ -35,12 +35,15 @@ export const metadata = {
     siteName: "reaction.work",
   },
   twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },   
-  icon: [
+  robots: { index: true, follow: true },
+
+  icons: {
+    icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
     ],
-  apple: "/apple-touch-icon.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport = {
