@@ -1,6 +1,6 @@
 {
-  "name": "reaction-works",
-  "version": "0.1.0",
+  "name": "reaction-work",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
