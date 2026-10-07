@@ -23,7 +23,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://reaction.work"),
+  metadataBase: new URL("https://reaction-work.vercel.app"),
   title: {
     default: "reaction.work — Full-stack разработчик",
     template: "%s · reaction.work",
