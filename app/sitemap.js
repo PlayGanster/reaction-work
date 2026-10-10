@@ -1,7 +1,9 @@
 import { getWorks } from "@/data/works";
 
+export const dynamic = 'force-static';
+
 export default function sitemap() {
-  const base = "https://reaction-work.vercel.app";
+  const base = "https://reaction-work.ru";
   const now = new Date();
 
   const staticPages = [
